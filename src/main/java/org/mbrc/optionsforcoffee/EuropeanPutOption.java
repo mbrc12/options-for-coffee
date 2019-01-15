@@ -19,11 +19,14 @@ public class EuropeanPutOption implements Asset {
 
     @Override
     public double getCurrentValue() {
+
+        double spotPrice = stockPath[currentDay];
+
         if (timeToMaturity <= 0) {
-            return Math.max(strike - stockPath[currentDay], 0);
+            return Math.max(strike - spotPrice, 0);
         }
 
-        return optionPriceEstimator.getEstimate(timeToMaturity, strike, OptionPriceEstimator.OptionType.PUT);
+        return optionPriceEstimator.getEstimate(spotPrice, timeToMaturity, strike, OptionPriceEstimator.OptionType.PUT);
     }
 
     @Override

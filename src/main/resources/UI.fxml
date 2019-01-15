@@ -1,22 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.AreaChart?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Slider?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <AnchorPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mbrc.optionsforcoffee.GUIController">
    <children>
       <SplitPane dividerPositions="0.38127090301003347" layoutX="98.0" layoutY="33.0" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -51,7 +38,7 @@
                                                       <TextField fx:id="fileName" editable="false" maxWidth="1.7976931348623157E308" prefHeight="27.0" prefWidth="256.0" text="Please choose a file..." />
                                                    </children>
                                                 </HBox>
-                                                <Slider fx:id="iterations" majorTickUnit="2500.0" max="10000.0" maxWidth="1.7976931348623157E308" min="10.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1000.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                                                <Slider fx:id="iterations" majorTickUnit="2500.0" max="10000.0" maxWidth="1.7976931348623157E308" min="10.0" minorTickCount="20" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1000.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                                                 <Slider fx:id="riskFree" majorTickUnit="1.0" max="10.0" maxWidth="1.7976931348623157E308" minorTickCount="10" showTickLabels="true" showTickMarks="true" value="2.41" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS" />
                                              </children>
                                           </GridPane>
@@ -88,7 +75,7 @@
                                                       <TextField fx:id="muValue" maxWidth="1.7976931348623157E308" promptText="Enter a value for mu" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowSpan="2147483647" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS" />
                                                       <TextField fx:id="sigmaValue" maxWidth="1.7976931348623157E308" promptText="Enter a value for sigma" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" GridPane.rowSpan="2147483647" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS" />
                                                       <Label text="Days:" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP" />
-                                                      <Slider fx:id="stockDays" blockIncrement="1.0" majorTickUnit="365.0" max="730.0" maxWidth="1.7976931348623157E308" min="2.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="367.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+                                                      <Slider fx:id="stockDays" blockIncrement="1.0" majorTickUnit="365.0" max="730.0" maxWidth="1.7976931348623157E308" min="2.0" minorTickCount="10" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="367.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="TOP" />
                                                    </children>
                                                 </GridPane>
                                                 <Button fx:id="showPath" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#showSamplePath" prefHeight="27.0" prefWidth="259.0" text="Show Sample Path" VBox.vgrow="NEVER">
@@ -116,11 +103,11 @@
                            <children>
                               <VBox prefHeight="338.0" prefWidth="696.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <SplitPane dividerPositions="0.510992275698158" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                    <SplitPane dividerPositions="0.5059347181008902" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                                       <items>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="288.0" prefWidth="341.0">
                                              <children>
-                                                <LineChart fx:id="chartSeries" prefHeight="241.0" prefWidth="658.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <LineChart fx:id="chartSeries" onMouseClicked="#showAbout" prefHeight="241.0" prefWidth="658.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                   <xAxis>
                                                     <NumberAxis side="BOTTOM" />
                                                   </xAxis>
@@ -132,7 +119,7 @@
                                           </AnchorPane>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="128.0" prefWidth="91.0">
                                              <children>
-                                                <AreaChart fx:id="chartReturns" layoutX="-74.0" layoutY="-60.0" prefHeight="316.0" prefWidth="326.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <AreaChart fx:id="chartReturns" layoutX="-74.0" layoutY="-60.0" onMouseClicked="#showAbout" prefHeight="316.0" prefWidth="326.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                   <xAxis>
                                                     <NumberAxis side="BOTTOM" />
                                                   </xAxis>
@@ -144,7 +131,11 @@
                                           </AnchorPane>
                                       </items>
                                     </SplitPane>
-                                    <Label fx:id="status" contentDisplay="RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="NEVER" />
+                                    <HBox maxWidth="1.7976931348623157E308" prefHeight="23.0" prefWidth="676.0">
+                                       <children>
+                                          <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#showConsole" prefHeight="27.0" prefWidth="348.0" text="Show Console" />
+                                          <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#clearConsole" prefHeight="27.0" prefWidth="341.0" text="Clear Console" />
+                                       </children></HBox>
                                  </children>
                               </VBox>
                            </children>

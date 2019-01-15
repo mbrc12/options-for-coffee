@@ -1,6 +1,6 @@
 # Options For Coffee
 
-Options for coffee is a simplified backtesting
+Options for Coffee is a simplified backtesting
 tool (or toy) for trading algorithms. It works
 by randomly generating stock prices (from specified parameters)
 and running the strategy on it.
@@ -40,7 +40,9 @@ When you test your strategy, OfC will take some time (**Issue**: for many days, 
 I need to put the evaluation in a separate thread or something).
 After that, it will display on the left `Results` pane a graph
 plotting the average position of your strategy, by day. On the
-left pane you'll find the distribution of final returns of your strategy.
+left pane you'll find the distribution of final returns of your strategy. You can also view
+logs using _Console Logs_. However, note that the total log size is limited to 100,000 characters
+for now, so please be frugal in your console output.
  
 ## Strategy
 
@@ -68,7 +70,7 @@ The `agent` object is referred to as `Q` below.
 | Method                                    | Description                                                                                                                         |
 |-------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|
 | Q.getStockPrice()                         | Returns current day stock price.                                                                                                    |
-| Q.getStockPriceAt(day)                    | Returns stock price on given day. `day <= Q.getCurrentDay()`                                                                                                  |
+| Q.getStockPrice(day)                      | Returns stock price on given day. `day <= Q.getCurrentDay()`                                                                        |
 | Q.getCurrentDay()                         | Returns current day.                                                                                                                |
 | Q.stock(amount)                           | Amount of stock to buy. Set amount to negative if you want to sell.                                                                 |
 | Q.callOption(direction, strike, maturity) | Buy/sell a European Call Option, with given strike rate and days to maturity. Set direction to Q.LONG or Q.SHORT for the direction. |
@@ -76,6 +78,9 @@ The `agent` object is referred to as `Q` below.
 | Q.getCallPrice(strike, maturity)          | Returns call option price for given strike and maturity.                                                                            |
 | Q.getPutPrice(strike, maturity)           | Returns put option price for given strike and maturity.                                                                             |
 | Q.log(loggingInfo)                        | Output loggingInfo to console. It will be logged as [Iteration # : Day #] : loggingInfo                                             |
+| Q.getCurrentCash()                        | Returns the current cash position. Maybe negative if borrowing.
+| Q.getRiskFreeRate()                       | Returns the current risk free rate. This is the risk free rate you select divided by 360.
+| 
 
 ## Bugs
 

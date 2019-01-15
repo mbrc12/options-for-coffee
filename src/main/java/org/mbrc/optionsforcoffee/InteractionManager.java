@@ -9,6 +9,7 @@ public class InteractionManager {
     public final Direction SHORT = Direction.SHORT;
 
     private final int days;
+    private final LoggingManager loggingManager;
     private OptionPriceEstimator optionPriceEstimator;
     private GeometricBrownianMotion stockGBM;
     private double riskFreeRate;
@@ -23,12 +24,13 @@ public class InteractionManager {
 
     int iterationNumber;
 
-    public InteractionManager(int iterationNumber,
+    public InteractionManager(LoggingManager loggingManager,
+                              int iterationNumber,
                               OptionPriceEstimator optionPriceEstimator,
                               GeometricBrownianMotion stockGBM,
                               double riskFreeRate,
                               double[] stockData) {
-
+        this.loggingManager = loggingManager;
         this.iterationNumber = iterationNumber;
         this.optionPriceEstimator = optionPriceEstimator;
         this.stockGBM = stockGBM;
@@ -84,7 +86,7 @@ public class InteractionManager {
      */
 
     public void log(String info) {
-        System.out.println("[" + iterationNumber + ", " + currentDay + "]: " + info);
+        loggingManager.log("Log [" + iterationNumber + ", " + currentDay + "]: " + info);
     }
 
     public int getCurrentDay() {
@@ -108,7 +110,7 @@ public class InteractionManager {
         return stockData[currentDay];
     }
 
-    public double getStockPriceAt(int day) {
+    public double getStockPrice(int day) {
         if (day > currentDay) return -1.0;
         return stockData[day];
     }
@@ -135,12 +137,12 @@ public class InteractionManager {
         addSignedAsset(new SignedAsset(putOption, direction));
     }
 
-    public void stock(int amount) {
+    public void stock(double amount) {
         Stock stock = new Stock(amount, stockData, currentDay);
         addSignedAsset(new SignedAsset(stock, Direction.LONG)); // Long/shortness of stocks are already in amount
     }
 
     public enum Direction {
-        LONG, SHORT;
+        LONG, SHORT
     }
 }

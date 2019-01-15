@@ -2,9 +2,9 @@ package org.mbrc.optionsforcoffee;
 
 public interface Asset {
 
-    public double getCurrentValue();
+    double getCurrentValue();
 
-    public void evolve(Object caller);
+    void evolve(Object caller);
 
-    public String getAssetType();
+    String getAssetType();
 }

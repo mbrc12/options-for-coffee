@@ -1,9 +1,10 @@
 package org.mbrc.optionsforcoffee;
 
-import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -12,8 +13,6 @@ import javax.script.ScriptException;
 import java.io.File;
 import java.nio.file.Files;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionException;
 
 public class GUIController {
 
@@ -38,13 +37,11 @@ public class GUIController {
     @FXML
     private Slider riskFree;
 
-    @FXML
-    private Label status;
-
     private ChartMaintainer chartMaintainer;
     private FileChooser fileChooser;
     private Stage stage;
     private File currentFile;
+    private LoggingManager loggingManager;
 
     public void showSamplePath(MouseEvent mouseEvent) {
 
@@ -76,8 +73,6 @@ public class GUIController {
 
     public void runStrategy(MouseEvent mouseEvent) {
 
-
-
         try {
 
             double mu = Double.parseDouble(muValue.getText());
@@ -93,14 +88,22 @@ public class GUIController {
             String code = new String(Files.readAllBytes(this.currentFile.toPath()));
 
             StrategyEvaluator strategyEvaluator =
-                    new StrategyEvaluator(code, chartMaintainer, geometricBrownianMotion, riskFreeRate);
+                    new StrategyEvaluator(code, chartMaintainer, loggingManager, geometricBrownianMotion, riskFreeRate);
 
-            strategyEvaluator.evaluate(days, iterCount, status);
+            strategyEvaluator.evaluate(days, iterCount);
 
         } catch (Exception e) {
             exceptionHandler(e);
         }
 
+    }
+
+    public void showConsole() {
+        loggingManager.showConsole();
+    }
+
+    public void clearConsole() {
+        loggingManager.clear();
     }
 
     public void exceptionHandler(Exception e) {
@@ -133,9 +136,24 @@ public class GUIController {
         }
     }
 
-    public void init(ChartMaintainer chartMaintainer, Stage stage) {
+    private final static String aboutText = "A simple backtesting tool / toy for trading strategies. Created by Mriganka Basu Roy Chowdhury.";
+
+    public void showAbout(MouseEvent e) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, aboutText);
+        alert.setTitle("About");
+        alert.setHeaderText("Options For Coffee");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            return;
+        }
+    }
+
+    public void init(ChartMaintainer chartMaintainer, LoggingManager loggingManager, Stage stage) {
         this.chartMaintainer = chartMaintainer;
+        this.loggingManager = loggingManager;
         this.fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("JavaScript files", "*.js"));
         this.stage = stage;
     }
 }

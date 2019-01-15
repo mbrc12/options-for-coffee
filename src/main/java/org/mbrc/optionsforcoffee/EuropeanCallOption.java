@@ -19,11 +19,14 @@ public class EuropeanCallOption implements Asset {
 
     @Override
     public double getCurrentValue() {
+
+        double spotPrice = stockPath[currentDay];
+
         if (timeToMaturity <= 0) {
-            return Math.max(stockPath[currentDay] - strike, 0);
+            return Math.max(spotPrice - strike, 0);
         }
 
-        return optionPriceEstimator.getEstimate(timeToMaturity, strike, OptionPriceEstimator.OptionType.CALL);
+        return optionPriceEstimator.getEstimate(spotPrice, timeToMaturity, strike, OptionPriceEstimator.OptionType.CALL);
     }
 
     @Override

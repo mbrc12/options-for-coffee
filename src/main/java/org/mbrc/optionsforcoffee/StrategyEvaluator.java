@@ -1,38 +1,47 @@
 package org.mbrc.optionsforcoffee;
 
-import javafx.scene.control.Label;
 import javax.script.ScriptException;
 import java.util.Arrays;
 
 public class StrategyEvaluator {
 
-    final static int DIVISIONS = 100;
+    final static int DIVISIONS = 20;
 
     private String code;
     private ChartMaintainer chartMaintainer;
+    private LoggingManager loggingManager;
     private GeometricBrownianMotion stockGBM;
     private double riskFreeRate;
 
-    public StrategyEvaluator(String code, ChartMaintainer chartMaintainer, GeometricBrownianMotion stockGBM, double riskFreeRate) {
+    public StrategyEvaluator(String code,
+                             ChartMaintainer chartMaintainer,
+                             LoggingManager loggingManager,
+                             GeometricBrownianMotion stockGBM,
+                             double riskFreeRate) {
         this.code = code;
         this.chartMaintainer = chartMaintainer;
+        this.loggingManager = loggingManager;
         this.stockGBM = stockGBM;
         this.riskFreeRate = riskFreeRate;
     }
 
-    public void evaluate(int days, int iterCount, Label status) throws NoSuchMethodException, ScriptException {
+    public void evaluate(int days, int iterCount) throws NoSuchMethodException, ScriptException {
 
         MathArray[] samples = stockGBM.generateSamplePaths(iterCount, days);
 
         OptionPriceEstimator optionPriceEstimator = new OptionPriceEstimator(stockGBM, riskFreeRate);
 
         SinglePathEvaluator singlePathEvaluator =
-                new SinglePathEvaluator(code, optionPriceEstimator, stockGBM, riskFreeRate);
+                new SinglePathEvaluator(code, loggingManager, optionPriceEstimator, stockGBM, riskFreeRate);
 
-        double[] averageOnDay = new double[days];
+        double[] averagePosition = new double[days];
+        double[] averageStock = new double[days];
+        double[] minPosition = new double[days];
+        double[] maxPosition = new double[days];
         double[] finalPositions = new double[iterCount];
 
-        Arrays.fill(averageOnDay, 0);
+        Arrays.fill(averagePosition, 0);
+
 
         for (int index = 0; index < iterCount; index++) {
 
@@ -40,23 +49,31 @@ public class StrategyEvaluator {
             double[] portfolio = singlePathEvaluator.evaluate(index, stockData);
 
             for (int day = 0; day < days; day++) {
-                averageOnDay[day] += portfolio[day];
+                averagePosition[day] += portfolio[day];
+                averageStock[day] += stockData[day];
+                minPosition[day] = Math.min(minPosition[day], portfolio[day]);
+                maxPosition[day] = Math.max(maxPosition[day], portfolio[day]);
             }
 
-            status.setText("Done with iteration: " + index);
+            loggingManager.log("== Iteration " + index + " over.");
             finalPositions[index] = portfolio[days - 1];
         }
 
         for (int day = 0; day < days; day++) {
-            averageOnDay[day] /= iterCount;
+            averagePosition[day] /= iterCount;
+            averageStock[day] /= iterCount;
         }
 
-        System.out.println("Final positions: " + Arrays.toString(finalPositions));
-
         chartMaintainer.clearSeries();
-        chartMaintainer.requestSeriesPlot("Average Position", averageOnDay);
+        chartMaintainer.requestSeriesPlot("Average Position", averagePosition);
+        chartMaintainer.requestSeriesPlot("Average Stock", averageStock);
+        chartMaintainer.requestSeriesPlot("Max Position", maxPosition);
+        chartMaintainer.requestSeriesPlot("Min Position", minPosition);
+
 
         plotFinalDistribution(finalPositions);
+
+        loggingManager.log("== Finished evaluation.");
     }
 
     public void plotFinalDistribution(double[] array) {
@@ -87,9 +104,6 @@ public class StrategyEvaluator {
             if (position >= DIVISIONS) position = DIVISIONS - 1;
             counts[position]++;
         }
-
-        System.out.println(Arrays.toString(edges));
-        System.out.println(Arrays.toString(counts));
 
         chartMaintainer.clearReturns();
         chartMaintainer.requestReturnsPlot("Distribution of Final Returns", edges, counts);

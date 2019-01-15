@@ -9,12 +9,18 @@ public class SinglePathEvaluator {
 
     private final double riskFreeRate;
     private String code;
+    private LoggingManager loggingManager;
     private OptionPriceEstimator optionPriceEstimator;
     private GeometricBrownianMotion stockGBM;
     private ScriptEngine scriptEngine;
 
-    public SinglePathEvaluator(String code, OptionPriceEstimator optionPriceEstimator, GeometricBrownianMotion stockGBM, double riskFreeRate) throws ScriptException {
+    public SinglePathEvaluator(String code,
+                               LoggingManager loggingManager,
+                               OptionPriceEstimator optionPriceEstimator,
+                               GeometricBrownianMotion stockGBM,
+                               double riskFreeRate) throws ScriptException {
         this.code = code;
+        this.loggingManager = loggingManager;
         this.optionPriceEstimator = optionPriceEstimator;
         this.stockGBM = stockGBM;
         this.riskFreeRate = riskFreeRate;
@@ -29,7 +35,7 @@ public class SinglePathEvaluator {
 
         int days = stockData.length;
 
-        InteractionManager interactionManager = new InteractionManager(iteration, optionPriceEstimator, stockGBM, riskFreeRate, stockData);
+        InteractionManager interactionManager = new InteractionManager(loggingManager, iteration, optionPriceEstimator, stockGBM, riskFreeRate, stockData);
 
         Invocable invocable = (Invocable)scriptEngine;
 
