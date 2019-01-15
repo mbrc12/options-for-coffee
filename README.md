@@ -60,6 +60,20 @@ can use to retrieve data about the market. The list of actions / functions are l
 Note that your function will be called every'day', so your strategy should only 
 implement the action for a day (depending on today's and past information received from the agent).
 
+Here is a sample strategy, that is extremely bad:
+
+```
+function strategy(Q) {
+	var curday = Q.getCurrentDay();
+	
+	if (curday >= 1 && Q.getStockPrice(curday) < Q.getStockPrice(curday - 1)) {
+		Q.stock(0.1);
+	} else {
+		Q.stock(-0.1);
+	}
+}
+```
+
 ### Interactor functions
 
 The `agent` object is referred to as `Q` below.
