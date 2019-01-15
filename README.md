@@ -7,9 +7,6 @@ and running the strategy on it.
 
 ## Installation
 
-**Note:** For now, please use the source code, as the v1.0.0 had a major error. It allowed
-the strategy to look into the future for stock prices. (>.<)
-
 Download the `.jar` file from the releases page, and execute it.
 It may probably want permissions depending on your system (This type of file can harm your computer etc..).
 
@@ -78,9 +75,8 @@ The `agent` object is referred to as `Q` below.
 | Q.getCallPrice(strike, maturity)          | Returns call option price for given strike and maturity.                                                                            |
 | Q.getPutPrice(strike, maturity)           | Returns put option price for given strike and maturity.                                                                             |
 | Q.log(loggingInfo)                        | Output loggingInfo to console. It will be logged as [Iteration # : Day #] : loggingInfo                                             |
-| Q.getCurrentCash()                        | Returns the current cash position. Maybe negative if borrowing.
-| Q.getRiskFreeRate()                       | Returns the current risk free rate. This is the risk free rate you select divided by 360.
-| 
+| Q.getCurrentCash()                        | Returns the current cash position. Maybe negative if borrowing.                                                                     |     
+| Q.getRiskFreeRate()                       | Returns the current risk free rate. This is the risk free rate you select divided by 360.                                           |  
 
 ## Bugs
 
