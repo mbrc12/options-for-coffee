@@ -7,6 +7,9 @@ and running the strategy on it.
 
 ## Installation
 
+**Note:** For now, please use the source code, as the v1.0.0 had a major error. It allowed
+the strategy to look into the future for stock prices. (>.<)
+
 Download the `.jar` file from the releases page, and execute it.
 It may probably want permissions depending on your system (This type of file can harm your computer etc..).
 
@@ -60,11 +63,12 @@ implement the action for a day (depending on today's and past information receiv
 
 ### Interactor functions
 
+The `agent` object is referred to as `Q` below.
 
 | Method                                    | Description                                                                                                                         |
 |-------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|
 | Q.getStockPrice()                         | Returns current day stock price.                                                                                                    |
-| Q.getStockPriceAt(day)                    | Returns stock price on given day.                                                                                                   |
+| Q.getStockPriceAt(day)                    | Returns stock price on given day. `day <= Q.getCurrentDay()`                                                                                                  |
 | Q.getCurrentDay()                         | Returns current day.                                                                                                                |
 | Q.stock(amount)                           | Amount of stock to buy. Set amount to negative if you want to sell.                                                                 |
 | Q.callOption(direction, strike, maturity) | Buy/sell a European Call Option, with given strike rate and days to maturity. Set direction to Q.LONG or Q.SHORT for the direction. |

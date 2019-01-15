@@ -109,6 +109,7 @@ public class InteractionManager {
     }
 
     public double getStockPriceAt(int day) {
+        if (day > currentDay) return -1.0;
         return stockData[day];
     }
 
