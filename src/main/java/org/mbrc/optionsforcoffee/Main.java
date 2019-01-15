@@ -18,7 +18,7 @@ public class Main extends Application {
         Scene scene = new Scene(loader.load());
 
         primaryStage.setTitle("Options For Coffee");
-        primaryStage.setResizable(false);
+//        primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
 

@@ -29,9 +29,9 @@
                                               <RowConstraints minHeight="10.0" percentHeight="33.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <Label text="Code:" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
-                                                <Label text="Iterations:" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-                                                <Label text="Risk Free % :" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+                                                <Label onMouseClicked="#showAbout" text="Code:" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
+                                                <Label onMouseClicked="#showAbout" text="Iterations:" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                                                <Label onMouseClicked="#showAbout" text="Risk Free % :" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
                                                 <HBox maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                                                    <children>
                                                       <Button mnemonicParsing="false" onMouseClicked="#pickFile" text="Choose File" />
@@ -68,13 +68,13 @@
                                                       <RowConstraints maxHeight="97.00000762939453" minHeight="10.0" percentHeight="25.0" prefHeight="54.0" vgrow="SOMETIMES" />
                                                   </rowConstraints>
                                                    <children>
-                                                      <Label text="Mu:" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
-                                                      <Label text="Sigma:" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-                                                      <Label text=" S(0):" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+                                                      <Label onMouseClicked="#showAbout" text="Mu:" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
+                                                      <Label onMouseClicked="#showAbout" text="Sigma:" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                                                      <Label onMouseClicked="#showAbout" text=" S(0):" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
                                                       <Slider fx:id="startValue" blockIncrement="100.0" majorTickUnit="50.0" max="200.0" maxWidth="1.7976931348623157E308" min="1.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="100.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.rowSpan="2147483647" GridPane.valignment="TOP" />
                                                       <TextField fx:id="muValue" maxWidth="1.7976931348623157E308" promptText="Enter a value for mu" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowSpan="2147483647" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS" />
                                                       <TextField fx:id="sigmaValue" maxWidth="1.7976931348623157E308" promptText="Enter a value for sigma" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" GridPane.rowSpan="2147483647" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS" />
-                                                      <Label text="Days:" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+                                                      <Label onMouseClicked="#showAbout" text="Days:" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP" />
                                                       <Slider fx:id="stockDays" blockIncrement="1.0" majorTickUnit="365.0" max="730.0" maxWidth="1.7976931348623157E308" min="2.0" minorTickCount="10" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="367.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="TOP" />
                                                    </children>
                                                 </GridPane>
@@ -107,7 +107,7 @@
                                       <items>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="288.0" prefWidth="341.0">
                                              <children>
-                                                <LineChart fx:id="chartSeries" onMouseClicked="#showAbout" prefHeight="241.0" prefWidth="658.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <LineChart fx:id="chartSeries" prefHeight="241.0" prefWidth="658.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                   <xAxis>
                                                     <NumberAxis side="BOTTOM" />
                                                   </xAxis>
@@ -119,7 +119,7 @@
                                           </AnchorPane>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="128.0" prefWidth="91.0">
                                              <children>
-                                                <AreaChart fx:id="chartReturns" layoutX="-74.0" layoutY="-60.0" onMouseClicked="#showAbout" prefHeight="316.0" prefWidth="326.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <AreaChart fx:id="chartReturns" layoutX="-74.0" layoutY="-60.0" prefHeight="316.0" prefWidth="326.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                   <xAxis>
                                                     <NumberAxis side="BOTTOM" />
                                                   </xAxis>
@@ -131,11 +131,19 @@
                                           </AnchorPane>
                                       </items>
                                     </SplitPane>
-                                    <HBox maxWidth="1.7976931348623157E308" prefHeight="23.0" prefWidth="676.0">
+                                    <GridPane VBox.vgrow="NEVER">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
                                        <children>
-                                          <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#showConsole" prefHeight="27.0" prefWidth="348.0" text="Show Console" />
-                                          <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#clearConsole" prefHeight="27.0" prefWidth="341.0" text="Clear Console" />
-                                       </children></HBox>
+                                          <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#showConsole" text="Show Console" />
+                                          <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#clearConsole" text="Clear Console" GridPane.columnIndex="1" />
+                                       </children>
+                                    </GridPane>
                                  </children>
                               </VBox>
                            </children>
